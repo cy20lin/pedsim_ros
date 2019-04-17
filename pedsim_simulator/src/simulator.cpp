@@ -132,7 +132,9 @@ void Simulator::runSimulation() {
     if (SCENE.getTime() < 0.1) {
       // setup the robot
       for (Agent* agent : SCENE.getAgents()) {
-        if (agent->getType() == Ped::Tagent::ROBOT) {
+        // FIXME: workaround for bug
+        // 'double free or corruption (fasttop)'
+        if (agent && agent->getType() == Ped::Tagent::ROBOT) {
           robot_ = agent;
           last_robot_orientation_ =
               poseFrom2DVelocity(robot_->getvx(), robot_->getvy());
